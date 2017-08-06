@@ -1,5 +1,6 @@
 package com.enkey.logiccircuit.gamestates;
 
+import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.SlickException;
@@ -17,15 +18,16 @@ public class GameState extends BasicGameState {
         return ID;
     }
 
-    public void init(GameContainer gameContainer, StateBasedGame stateBasedGame) throws SlickException {
+    public void init(GameContainer gameContainer, StateBasedGame app) throws SlickException {
 
     }
 
-    public void render(GameContainer gameContainer, StateBasedGame stateBasedGame, Graphics graphics) throws SlickException {
-
+    public void render(GameContainer gameContainer, StateBasedGame app, Graphics g) throws SlickException {
+        g.setColor(Color.gray);
+        g.fillRect(0, 0, gameContainer.getWidth(), gameContainer.getHeight());
     }
 
-    public void update(GameContainer gameContainer, StateBasedGame stateBasedGame, int i) throws SlickException {
+    public void update(GameContainer gameContainer, StateBasedGame app, int i) throws SlickException {
 
     }
 }

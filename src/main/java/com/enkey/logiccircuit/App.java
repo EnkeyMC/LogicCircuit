@@ -17,7 +17,6 @@ public class App extends StateBasedGame {
     // Application Properties
     public static final int WIDTH   = 640;
     public static final int HEIGHT  = 480;
-    public static final int FPS     = 60;
     public static final double VERSION = 0.1;
     public static final String NAME = "LogicCircuit";
 
