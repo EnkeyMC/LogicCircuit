@@ -15,10 +15,11 @@ public class App extends StateBasedGame {
     public static final int GAME = 1;
 
     // Application Properties
-    public static final int WIDTH   = 640;
-    public static final int HEIGHT  = 480;
+    public static final int WIDTH   = 800;
+    public static final int HEIGHT  = 600;
     public static final double VERSION = 0.1;
     public static final String NAME = "LogicCircuit";
+    public static final int tileSize = 32;
 
     public App() {
         super(NAME + " v" + VERSION);
