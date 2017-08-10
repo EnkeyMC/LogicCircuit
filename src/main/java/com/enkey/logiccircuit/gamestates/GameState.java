@@ -2,6 +2,8 @@ package com.enkey.logiccircuit.gamestates;
 
 import com.enkey.logiccircuit.App;
 import com.enkey.logiccircuit.Camera;
+import com.enkey.logiccircuit.Utils;
+import com.enkey.logiccircuit.gameobject.LogicalNOT;
 import com.enkey.logiccircuit.map.InfiniteMap;
 import org.newdawn.slick.*;
 import org.newdawn.slick.geom.Rectangle;
@@ -38,13 +40,18 @@ public class GameState extends BasicGameState {
 
         Input input = gameContainer.getInput();
         int tileSize = App.tileSize;
-        Rectangle rect = new Rectangle((input.getAbsoluteMouseX() / tileSize) * tileSize, (input.getAbsoluteMouseY() / tileSize) * tileSize, tileSize, tileSize);
+        Rectangle rect = new Rectangle(Utils.alignToGrid(input.getAbsoluteMouseX(), tileSize), Utils.alignToGrid(input.getAbsoluteMouseY(), tileSize), tileSize, tileSize);
         g.setColor(Color.black);
         g.fill(rect);
         this.camera.stopCameraRendering(g);
     }
 
     public void update(GameContainer gameContainer, StateBasedGame app, int i) throws SlickException {
+        Input input = gameContainer.getInput();
+        if (input.isMousePressed(0)) {
+            this.map.setObject(Utils.alignToGrid(input.getMouseX()), Utils.alignToGrid(input.getMouseY()), new LogicalNOT());
+        }
+
         this.map.update(gameContainer, app, i, this);
     }
 
