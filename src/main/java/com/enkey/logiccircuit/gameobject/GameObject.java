@@ -10,6 +10,9 @@ import java.awt.Point;
 
 public abstract class GameObject {
 
+    public boolean isDead = false;
+    public Point position;
+
     public abstract void update(GameContainer gameContainer, StateBasedGame app, int i, GameState gameState) throws SlickException;
 
     public abstract void render(GameContainer gameContainer, StateBasedGame app, Graphics g, GameState gameState, Point position) throws SlickException;
