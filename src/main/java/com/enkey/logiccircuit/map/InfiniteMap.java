@@ -46,9 +46,9 @@ public class InfiniteMap {
             entry.getValue().render(gameContainer, app, g, gameState, entry.getKey());
         }
 
-        for (Wireable wire : wires) {
+        /*for (Wireable wire : wires) {
             wire.resetRendered();
-        }
+        }*/
     }
 
     public void setObject(Point coord, GameObject object) {

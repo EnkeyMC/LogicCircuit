@@ -36,7 +36,7 @@ public class WireNode extends Wireable {
             }
         }
 
-        this.rendered = true;
+        //this.rendered = true;
     }
 
     public boolean isActive() {

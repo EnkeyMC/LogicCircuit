@@ -38,10 +38,13 @@ public class Directional<T> implements Iterable<T> {
         switch (direction) {
             case UP:
                 up = obj;
+                break;
             case RIGHT:
                 right = obj;
+                break;
             case LEFT:
                 left = obj;
+                break;
             default:
                 down = obj;
         }

@@ -20,7 +20,7 @@ public enum Direction {
 
     public static Direction getDirection(Point target, Point fromDirection) {
         int deltaX = fromDirection.x - target.x;
-        int deltaY = fromDirection.y - target.y;
+        int deltaY = target.y - fromDirection.y;
 
         if (deltaY >= Math.abs(deltaX)) {
             return Direction.UP;
