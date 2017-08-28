@@ -2,11 +2,10 @@ package com.enkey.logiccircuit.gamestates;
 
 import com.enkey.logiccircuit.App;
 import com.enkey.logiccircuit.Camera;
-import com.enkey.logiccircuit.gameobject.Wireable;
+import com.enkey.logiccircuit.actions.Action;
+import com.enkey.logiccircuit.actions.PlaceWireAction;
 import com.enkey.logiccircuit.utils.Utils;
-import com.enkey.logiccircuit.gameobject.GameObject;
-import com.enkey.logiccircuit.gameobject.LogicalNOT;
-import com.enkey.logiccircuit.gameobject.WireNode;
+import com.enkey.logiccircuit.gameobjects.WireNode;
 import com.enkey.logiccircuit.map.InfiniteMap;
 import org.newdawn.slick.*;
 import org.newdawn.slick.Color;
@@ -25,8 +24,7 @@ public class GameState extends BasicGameState {
 
     private InfiniteMap map;
     private Camera camera;
-
-    private WireNode lastWire;
+    private Action action;
 
     @Override
     public int getID() {
@@ -36,7 +34,8 @@ public class GameState extends BasicGameState {
     public void init(GameContainer gameContainer, StateBasedGame app) throws SlickException {
         map = new InfiniteMap();
         camera = new Camera();
-        lastWire = null;
+        action = new PlaceWireAction();
+        action.init();
     }
 
     public void render(GameContainer gameContainer, StateBasedGame app, Graphics g) throws SlickException {
@@ -48,38 +47,13 @@ public class GameState extends BasicGameState {
         this.camera.startCameraRendering(g);
         this.map.render(gameContainer, app, g, this);
 
-        Input input = gameContainer.getInput();
-        int tileSize = App.tileSize;
-        Rectangle rect = new Rectangle(
-                Utils.alignToGrid(input.getAbsoluteMouseX(), tileSize),
-                Utils.alignToGrid(input.getAbsoluteMouseY(), tileSize),
-                tileSize,
-                tileSize
-        );
+        this.action.render(gameContainer, app, g, this);
 
-        g.setColor(Color.black);
-        g.fill(rect);
         this.camera.stopCameraRendering(g);
     }
 
     public void update(GameContainer gameContainer, StateBasedGame app, int i) throws SlickException {
-        Input input = gameContainer.getInput();
-        if (input.isMousePressed(0)) {
-            Point position = new Point(Utils.alignToGrid(input.getMouseX()), Utils.alignToGrid(input.getMouseY()));
-
-            WireNode wire = new WireNode();
-            map.setObject(position, wire);
-
-            if (lastWire != null) {
-                if (lastWire.canConnectFrom(position)) {
-                    wire.connect(lastWire);
-                    lastWire.connect(wire);
-                }
-            }
-
-            lastWire = wire;
-        }
-
+        this.action.update(gameContainer, app, i, this);
         this.map.update(gameContainer, app, i, this);
     }
 

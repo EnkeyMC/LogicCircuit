@@ -1,4 +1,4 @@
-package com.enkey.logiccircuit.gameobject;
+package com.enkey.logiccircuit.gameobjects;
 
 import com.enkey.logiccircuit.App;
 import com.enkey.logiccircuit.utils.Direction;
@@ -37,6 +37,10 @@ public class WireNode extends Wireable {
         }
 
         //this.rendered = true;
+    }
+
+    public void renderGhost(GameContainer gameContainer, StateBasedGame app, Graphics g, GameState gameState, Point position) throws SlickException {
+
     }
 
     public boolean isActive() {

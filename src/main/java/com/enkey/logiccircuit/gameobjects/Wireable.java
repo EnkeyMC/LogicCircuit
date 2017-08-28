@@ -1,4 +1,4 @@
-package com.enkey.logiccircuit.gameobject;
+package com.enkey.logiccircuit.gameobjects;
 
 import java.awt.Point;
 

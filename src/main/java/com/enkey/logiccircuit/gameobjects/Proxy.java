@@ -1,4 +1,4 @@
-package com.enkey.logiccircuit.gameobject;
+package com.enkey.logiccircuit.gameobjects;
 
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
@@ -23,4 +23,8 @@ public class Proxy extends GameObject {
     }
 
     public void render(GameContainer gameContainer, StateBasedGame app, Graphics g, GameState gameState, Point position) throws SlickException {}
+
+    public void renderGhost(GameContainer gameContainer, StateBasedGame app, Graphics g, GameState gameState, Point position) throws SlickException {
+
+    }
 }

@@ -54,11 +54,10 @@ public class Directional<T> implements Iterable<T> {
         Iterator<T> it = new Iterator<T>() {
 
             private Direction currentDir = Direction.UP;
+            private boolean last = false;
 
             public boolean hasNext() {
-                if (currentDir == Direction.LEFT)
-                    return false;
-                return true;
+                return !last;
             }
 
             public T next() {
@@ -73,6 +72,7 @@ public class Directional<T> implements Iterable<T> {
                         currentDir = Direction.LEFT;
                         return down;
                     case LEFT:
+                        last = true;
                         return left;
                     default:
                         return null;

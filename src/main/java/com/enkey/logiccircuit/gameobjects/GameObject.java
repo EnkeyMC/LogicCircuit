@@ -1,4 +1,4 @@
-package com.enkey.logiccircuit.gameobject;
+package com.enkey.logiccircuit.gameobjects;
 
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
@@ -16,4 +16,6 @@ public abstract class GameObject {
     public abstract void update(GameContainer gameContainer, StateBasedGame app, int i, GameState gameState) throws SlickException;
 
     public abstract void render(GameContainer gameContainer, StateBasedGame app, Graphics g, GameState gameState, Point position) throws SlickException;
+
+    public abstract void renderGhost(GameContainer gameContainer, StateBasedGame app, Graphics g, GameState gameState, Point position) throws SlickException;
 }

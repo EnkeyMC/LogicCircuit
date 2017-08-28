@@ -1,7 +1,7 @@
 package com.enkey.logiccircuit.map;
 
-import com.enkey.logiccircuit.gameobject.GameObject;
-import com.enkey.logiccircuit.gameobject.Wireable;
+import com.enkey.logiccircuit.gameobjects.GameObject;
+import com.enkey.logiccircuit.gameobjects.Wireable;
 import com.enkey.logiccircuit.gamestates.GameState;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
