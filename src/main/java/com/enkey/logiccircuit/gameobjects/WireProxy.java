@@ -41,5 +41,10 @@ public class WireProxy extends GameObject {
     public void render(GameContainer gameContainer, StateBasedGame app, Graphics g, GameState gameState, Point position, boolean ghost) throws SlickException {
         g.setColor(new Color(255,255,255,0.2f));
         g.fillRect(position.x, position.y, App.tileSize, App.tileSize);
+        g.setColor(Color.black);
+        if (vertical != null)
+            g.fillRect(position.x, position.y, 2, 2);
+        if (horizontal != null)
+            g.fillRect(position.x + 3, position.y, 2, 2);
     }
 }

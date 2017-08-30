@@ -7,11 +7,13 @@ import com.enkey.logiccircuit.gameobjects.WireProxy;
 import com.enkey.logiccircuit.gameobjects.Wireable;
 import com.enkey.logiccircuit.gamestates.GameState;
 import com.enkey.logiccircuit.map.InfiniteMap;
+import com.enkey.logiccircuit.utils.Direction;
 import com.enkey.logiccircuit.utils.Utils;
 import org.newdawn.slick.*;
 import org.newdawn.slick.state.StateBasedGame;
 
 import java.awt.Point;
+import java.util.ArrayList;
 
 /**
  * Created by MOmac on 28.08.2017.
@@ -43,6 +45,35 @@ public class PlaceWireAction extends Action {
             } else {
                 if (obj instanceof Wireable) {
                     wire = (Wireable) obj;
+                } else if (obj instanceof  WireProxy) {
+                    WireProxy proxy = (WireProxy) obj;
+
+                    wire = new WireNode();
+
+                    ArrayList<Wireable> wires = new ArrayList<Wireable>();
+                    if (proxy.vertical != null)
+                        wires.add(proxy.vertical);
+                    if (proxy.horizontal != null)
+                        wires.add(proxy.horizontal);
+
+                    Wireable opposite;
+
+                    map.setObject(position, wire);
+                    for (Wireable proxyWire : wires) {
+                        Direction dir = Direction.getDirection(proxyWire.position, position);
+                        opposite = proxyWire.getConnections().get(dir);
+
+                        proxyWire.getConnections().set(dir, null);
+                        proxyWire.connect(wire, position);
+                        wire.connect(proxyWire);
+
+                        opposite.getConnections().set(dir.opposite(), null);
+                        opposite.connect(wire, position);
+                        wire.connect(opposite);
+                        placeProxies(wire, position, opposite.position, map);
+                    }
+
+                    proxy.isDead = true;
                 } else {
                     return;
                 }

@@ -32,4 +32,17 @@ public enum Direction {
             return Direction.LEFT;
         }
     }
+
+    public Direction opposite() {
+        switch (this) {
+            case UP:
+                return DOWN;
+            case RIGHT:
+                return LEFT;
+            case DOWN:
+                return UP;
+            default:
+                return RIGHT;
+        }
+    }
 }

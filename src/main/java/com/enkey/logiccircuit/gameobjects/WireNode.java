@@ -22,18 +22,25 @@ public class WireNode extends Wireable {
     }
 
     public void render(GameContainer gameContainer, StateBasedGame app, Graphics g, GameState gameState, Point position, boolean ghost) throws SlickException {
+        Color wireColor = Color.red;
         if (ghost)
-            g.setColor(new Color(255,0,0, 0.5f));
-        else
-            g.setColor(Color.red);
+            wireColor = new Color(255,0,0, 0.5f);
+
+        g.setColor(wireColor);
 
         g.fillRect(position.x + 4, position.y + 4, App.tileSize - 8, App.tileSize - 8);
 
+        int i = 0;
+
         for (Wireable wire : connections) {
             if (wire != null && !(wire).wireRendered()) {
+                g.setColor(wireColor);
                 g.setLineWidth(10);
                 g.drawLine(position.x + (App.tileSize / 2), position.y + (App.tileSize / 2), wire.position.x + (App.tileSize / 2), wire.position.y + (App.tileSize / 2));
+                g.setColor(Color.black);
+                g.fillRect(position.x + (i * 3), position.y, 2,2);
             }
+            i++;
         }
 
         //this.rendered = true;
