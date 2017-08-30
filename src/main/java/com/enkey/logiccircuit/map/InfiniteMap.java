@@ -43,7 +43,7 @@ public class InfiniteMap {
 
     public void render(GameContainer gameContainer, StateBasedGame app, Graphics g, GameState gameState) throws SlickException {
         for (Map.Entry<Point, GameObject> entry : map.entrySet()) {
-            entry.getValue().render(gameContainer, app, g, gameState, entry.getKey());
+            entry.getValue().render(gameContainer, app, g, gameState, entry.getKey(), false);
         }
 
         /*for (Wireable wire : wires) {

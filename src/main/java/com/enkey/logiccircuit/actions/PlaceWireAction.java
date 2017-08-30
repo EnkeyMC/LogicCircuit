@@ -8,7 +8,6 @@ import com.enkey.logiccircuit.gamestates.GameState;
 import com.enkey.logiccircuit.map.InfiniteMap;
 import com.enkey.logiccircuit.utils.Utils;
 import org.newdawn.slick.*;
-import org.newdawn.slick.geom.Rectangle;
 import org.newdawn.slick.state.StateBasedGame;
 
 import java.awt.Point;
@@ -76,6 +75,6 @@ public class PlaceWireAction extends Action {
             }
         }
 
-        wire.render(gameContainer, app, g, gameState, position);
+        wire.render(gameContainer, app, g, gameState, position, true);
     }
 }

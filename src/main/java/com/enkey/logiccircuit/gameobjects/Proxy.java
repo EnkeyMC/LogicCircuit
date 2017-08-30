@@ -22,9 +22,5 @@ public class Proxy extends GameObject {
             this.isDead = true;
     }
 
-    public void render(GameContainer gameContainer, StateBasedGame app, Graphics g, GameState gameState, Point position) throws SlickException {}
-
-    public void renderGhost(GameContainer gameContainer, StateBasedGame app, Graphics g, GameState gameState, Point position) throws SlickException {
-
-    }
+    public void render(GameContainer gameContainer, StateBasedGame app, Graphics g, GameState gameState, Point position, boolean ghost) throws SlickException {}
 }

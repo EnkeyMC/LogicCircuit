@@ -2,7 +2,6 @@ package com.enkey.logiccircuit.gameobjects;
 
 import com.enkey.logiccircuit.App;
 import com.enkey.logiccircuit.utils.Direction;
-import com.enkey.logiccircuit.utils.Directional;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
@@ -22,22 +21,22 @@ public class WireNode extends Wireable {
 
     }
 
-    public void render(GameContainer gameContainer, StateBasedGame app, Graphics g, GameState gameState, Point position) throws SlickException {
-        g.setColor(Color.red);
-        g.fillRect(position.x, position.y, App.tileSize, App.tileSize);
+    public void render(GameContainer gameContainer, StateBasedGame app, Graphics g, GameState gameState, Point position, boolean ghost) throws SlickException {
+        if (ghost)
+            g.setColor(new Color(255,0,0, 0.5f));
+        else
+            g.setColor(Color.red);
+
+        g.fillRect(position.x + 4, position.y + 4, App.tileSize - 8, App.tileSize - 8);
 
         for (Wireable wire : connections) {
             if (wire != null && !(wire).wireRendered()) {
-                g.setLineWidth(14);
+                g.setLineWidth(10);
                 g.drawLine(position.x + (App.tileSize / 2), position.y + (App.tileSize / 2), wire.position.x + (App.tileSize / 2), wire.position.y + (App.tileSize / 2));
             }
         }
 
         //this.rendered = true;
-    }
-
-    public void renderGhost(GameContainer gameContainer, StateBasedGame app, Graphics g, GameState gameState, Point position) throws SlickException {
-
     }
 
     public boolean isActive() {

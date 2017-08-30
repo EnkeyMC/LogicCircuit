@@ -19,12 +19,8 @@ public class LogicalNOT extends LogicCircuit {
 
     }
 
-    public void render(GameContainer gameContainer, StateBasedGame app, Graphics g, GameState gameState, Point position) throws SlickException {
+    public void render(GameContainer gameContainer, StateBasedGame app, Graphics g, GameState gameState, Point position, boolean ghost) throws SlickException {
         g.setColor(Color.white);
         g.fillRect(position.x, position.y, App.tileSize, App.tileSize);
-    }
-
-    public void renderGhost(GameContainer gameContainer, StateBasedGame app, Graphics g, GameState gameState, Point position) throws SlickException {
-
     }
 }
