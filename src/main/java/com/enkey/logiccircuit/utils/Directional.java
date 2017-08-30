@@ -1,6 +1,5 @@
 package com.enkey.logiccircuit.utils;
 
-import java.awt.Point;
 import java.util.Iterator;
 
 public class Directional<T> implements Iterable<T> {

@@ -1,8 +1,11 @@
 package com.enkey.logiccircuit.actions;
 
 import com.enkey.logiccircuit.App;
+import com.enkey.logiccircuit.gameobjects.GameObject;
 import com.enkey.logiccircuit.gameobjects.WireNode;
+import com.enkey.logiccircuit.gameobjects.Wireable;
 import com.enkey.logiccircuit.gamestates.GameState;
+import com.enkey.logiccircuit.map.InfiniteMap;
 import com.enkey.logiccircuit.utils.Utils;
 import org.newdawn.slick.*;
 import org.newdawn.slick.geom.Rectangle;
@@ -15,7 +18,7 @@ import java.awt.Point;
  */
 public class PlaceWireAction extends Action {
 
-    private WireNode lastWire;
+    private Wireable lastWire;
 
     @Override
     public void init() {
@@ -29,8 +32,21 @@ public class PlaceWireAction extends Action {
         if (input.isMousePressed(0)) {
             Point position = new Point(Utils.alignToGrid(input.getMouseX()), Utils.alignToGrid(input.getMouseY()));
 
-            WireNode wire = new WireNode();
-            gameState.getMap().setObject(position, wire);
+            InfiniteMap map = gameState.getMap();
+            Wireable wire;
+
+            GameObject obj = map.at(position);
+
+            if (obj == null) {
+                wire = new WireNode();
+                map.setObject(position, wire);
+            } else {
+                if (obj instanceof Wireable) {
+                    wire = (Wireable) obj;
+                } else {
+                    return;
+                }
+            }
 
             if (lastWire != null) {
                 if (lastWire.canConnectFrom(position)) {

@@ -14,11 +14,8 @@ import java.awt.Point;
 
 public class WireNode extends Wireable {
 
-    protected Directional<Wireable> connections;
-
     public WireNode() {
         super();
-        connections = new Directional<Wireable>();
     }
 
     public void update(GameContainer gameContainer, StateBasedGame app, int i, GameState gameState) throws SlickException {
@@ -55,26 +52,6 @@ public class WireNode extends Wireable {
         if (this.position.x == position.x || this.position.y == position.y) {
             if (this.connections.get(Direction.getDirection(this.position, position)) == null)
                 return true;
-        }
-        return false;
-    }
-
-    public Directional<Wireable> getConnections() {
-        return connections;
-    }
-
-    public boolean connect(Wireable wire) {
-        return connect(wire, null);
-    }
-
-    public boolean connect(Wireable wire, Point from) {
-        if (from == null) {
-            from = wire.position;
-        }
-
-        if (canConnectFrom(from)) {
-            connections.set(Direction.getDirection(this.position, from), wire);
-            return true;
         }
         return false;
     }
