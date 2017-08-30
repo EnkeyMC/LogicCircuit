@@ -4,20 +4,26 @@ import java.util.Iterator;
 
 public class Directional<T> implements Iterable<T> {
 
-    public T up;
-    public T right;
-    public T down;
-    public T left;
+    private T up;
+    private T right;
+    private T down;
+    private T left;
 
-    public Directional (T up, T right, T down, T left) {
-        this.up = up;
-        this.down = down;
-        this.right = right;
-        this.left = left;
+    private byte mask;
+
+    public static final byte MASK_UP = 1;
+    public static final byte MASK_RIGHT = 2;
+    public static final byte MASK_DOWN = 4;
+    public static final byte MASK_LEFT = 8;
+
+    public Directional (byte mask) {
+        this.mask = mask;
+        up = down = left = right = null;
     }
 
     public Directional () {
         up = down = left = right = null;
+        mask = 0;
     }
 
     public T get(Direction direction) {
@@ -33,19 +39,32 @@ public class Directional<T> implements Iterable<T> {
         }
     }
 
-    public void set(Direction direction, T obj) {
+    public boolean set(Direction direction, T obj) {
         switch (direction) {
             case UP:
-                up = obj;
-                break;
+                if ((mask & MASK_UP) == 0) {
+                    up = obj;
+                    return true;
+                }
+                return false;
             case RIGHT:
-                right = obj;
-                break;
+                if ((mask & MASK_RIGHT) == 0) {
+                    right = obj;
+                    return true;
+                }
+                return false;
             case LEFT:
-                left = obj;
-                break;
+                if ((mask & MASK_LEFT) == 0) {
+                    left = obj;
+                    return true;
+                }
+                return false;
             default:
-                down = obj;
+                if ((mask & MASK_DOWN) == 0) {
+                    down = obj;
+                    return true;
+                }
+                return false;
         }
     }
 
@@ -56,23 +75,46 @@ public class Directional<T> implements Iterable<T> {
             private boolean last = false;
 
             public boolean hasNext() {
-                return !last;
+                if (last)
+                    return false;
+
+                switch (currentDir) {
+                    case UP:
+                        if ((mask & MASK_UP) == 0)
+                            return true;
+                    case RIGHT:
+                        if ((mask & MASK_RIGHT) == 0)
+                            return true;
+                    case DOWN:
+                        if ((mask & MASK_DOWN) == 0)
+                            return true;
+                    case LEFT:
+                        if ((mask & MASK_LEFT) == 0)
+                            return true;
+                }
+
+                return false;
             }
 
             public T next() {
                 switch (currentDir) {
                     case UP:
                         currentDir = Direction.RIGHT;
-                        return up;
+                        if ((mask & MASK_UP) == 0)
+                            return up;
                     case RIGHT:
                         currentDir = Direction.DOWN;
-                        return right;
+                        if ((mask & MASK_RIGHT) == 0)
+                            return right;
                     case DOWN:
                         currentDir = Direction.LEFT;
-                        return down;
+                        if ((mask & MASK_DOWN) == 0)
+                            return down;
                     case LEFT:
-                        last = true;
-                        return left;
+                        if ((mask & MASK_LEFT) == 0) {
+                            last = true;
+                            return left;
+                        }
                     default:
                         return null;
                 }
@@ -84,5 +126,13 @@ public class Directional<T> implements Iterable<T> {
         };
 
         return it;
+    }
+
+    public byte getMask() {
+        return mask;
+    }
+
+    public void setMask(byte mask) {
+        this.mask = mask;
     }
 }
