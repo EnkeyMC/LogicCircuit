@@ -8,11 +8,11 @@ import com.enkey.logiccircuit.gameobjects.Wireable;
 import com.enkey.logiccircuit.gamestates.GameState;
 import com.enkey.logiccircuit.map.InfiniteMap;
 import com.enkey.logiccircuit.utils.Direction;
+import com.enkey.logiccircuit.utils.PointInt;
 import com.enkey.logiccircuit.utils.Utils;
 import org.newdawn.slick.*;
 import org.newdawn.slick.state.StateBasedGame;
 
-import java.awt.Point;
 import java.util.ArrayList;
 
 /**
@@ -32,7 +32,9 @@ public class PlaceWireAction extends Action {
     public void update(GameContainer gameContainer, StateBasedGame app, int i, GameState gameState) throws SlickException {
         Input input = gameContainer.getInput();
         if (input.isMousePressed(0)) {
-            Point position = new Point(Utils.alignToGrid(input.getMouseX()), Utils.alignToGrid(input.getMouseY()));
+            PointInt position = new PointInt(input.getMouseX(), input.getMouseY());
+            gameState.getCamera().screenToWorld(position);
+            position.move(Utils.alignToGrid(position.x), Utils.alignToGrid(position.y));
 
             InfiniteMap map = gameState.getMap();
             Wireable wire;
@@ -93,11 +95,10 @@ public class PlaceWireAction extends Action {
 
     public void render(GameContainer gameContainer, StateBasedGame app, Graphics g, GameState gameState) throws SlickException {
         Input input = gameContainer.getInput();
-        int tileSize = App.tileSize;
-        Point position = new Point(
-                Utils.alignToGrid(input.getAbsoluteMouseX(), tileSize),
-                Utils.alignToGrid(input.getAbsoluteMouseY(), tileSize)
-        );
+
+        PointInt position = new PointInt(input.getMouseX(), input.getMouseY());
+        gameState.getCamera().screenToWorld(position);
+        position.move(Utils.alignToGrid(position.x), Utils.alignToGrid(position.y));
 
         WireNode wire = new WireNode();
         wire.position = position;
@@ -111,12 +112,12 @@ public class PlaceWireAction extends Action {
         wire.render(gameContainer, app, g, gameState, position, true);
     }
 
-    protected void placeProxies(Wireable wire, Point pos1, Point pos2, InfiniteMap map) {
+    protected void placeProxies(Wireable wire, PointInt pos1, PointInt pos2, InfiniteMap map) {
         int tileSize = App.tileSize;
 
         if (pos1.x == pos2.x) {
             if (pos1.y > pos2.y) {
-                Point tmp = pos1;
+                PointInt tmp = pos1;
                 pos1 = pos2;
                 pos2 = tmp;
             }
@@ -135,7 +136,7 @@ public class PlaceWireAction extends Action {
             }
         } else if (pos1.y == pos2.y) {
             if (pos1.x > pos2.x) {
-                Point tmp = pos1;
+                PointInt tmp = pos1;
                 pos1 = pos2;
                 pos2 = tmp;
             }

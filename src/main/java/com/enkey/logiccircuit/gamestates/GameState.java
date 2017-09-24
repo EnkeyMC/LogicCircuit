@@ -1,20 +1,15 @@
 package com.enkey.logiccircuit.gamestates;
 
-import com.enkey.logiccircuit.App;
 import com.enkey.logiccircuit.Camera;
+import com.enkey.logiccircuit.MainCamera;
 import com.enkey.logiccircuit.actions.Action;
 import com.enkey.logiccircuit.actions.PlaceWireAction;
-import com.enkey.logiccircuit.utils.Utils;
-import com.enkey.logiccircuit.gameobjects.WireNode;
 import com.enkey.logiccircuit.map.InfiniteMap;
 import org.newdawn.slick.*;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.Graphics;
-import org.newdawn.slick.geom.Rectangle;
 import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
-
-import java.awt.*;
 
 /**
  * Created by MOmac on 05.08.2017.
@@ -23,7 +18,7 @@ public class GameState extends BasicGameState {
     public static final int ID = 1;
 
     private InfiniteMap map;
-    private Camera camera;
+    private MainCamera camera;
     private Action action;
 
     @Override
@@ -33,7 +28,8 @@ public class GameState extends BasicGameState {
 
     public void init(GameContainer gameContainer, StateBasedGame app) throws SlickException {
         map = new InfiniteMap();
-        camera = new Camera();
+        camera = new MainCamera();
+        gameContainer.getInput().addMouseListener(camera);
         action = new PlaceWireAction();
         action.init();
     }
@@ -59,5 +55,9 @@ public class GameState extends BasicGameState {
 
     public InfiniteMap getMap() {
         return this.map;
+    }
+
+    public Camera getCamera() {
+        return camera;
     }
 }

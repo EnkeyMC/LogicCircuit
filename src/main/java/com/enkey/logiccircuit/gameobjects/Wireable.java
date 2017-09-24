@@ -2,8 +2,7 @@ package com.enkey.logiccircuit.gameobjects;
 
 import com.enkey.logiccircuit.utils.Direction;
 import com.enkey.logiccircuit.utils.Directional;
-
-import java.awt.Point;
+import com.enkey.logiccircuit.utils.PointInt;
 
 public abstract class Wireable extends GameObject {
 
@@ -31,7 +30,7 @@ public abstract class Wireable extends GameObject {
         return connect(wire, null);
     }
 
-    public boolean connect(Wireable wire, Point from) {
+    public boolean connect(Wireable wire, PointInt from) {
         if (from == null) {
             from = wire.position;
         }
@@ -44,5 +43,5 @@ public abstract class Wireable extends GameObject {
     }
 
     public abstract boolean isActive();
-    public abstract boolean canConnectFrom(Point position);
+    public abstract boolean canConnectFrom(PointInt position);
 }

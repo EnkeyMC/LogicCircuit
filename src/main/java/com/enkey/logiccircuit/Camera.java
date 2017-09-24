@@ -1,50 +1,66 @@
 package com.enkey.logiccircuit;
 
+import com.enkey.logiccircuit.utils.PointFloat;
+import com.enkey.logiccircuit.utils.PointInt;
+import com.enkey.logiccircuit.utils.Utils;
 import org.newdawn.slick.Graphics;
-import org.newdawn.slick.geom.Point;
 import org.newdawn.slick.geom.Rectangle;
 
 public class Camera {
-    private Rectangle camView;
-    private Point offset;
+    protected Rectangle camView;
+    protected PointInt offset;
+    protected float scale;
+
+    private final float scaleStep = 1.2f;
+
+    private static final float minScale = 0.4f;
+    private static final float maxScale = 2f;
 
     public Camera() {
         camView = new Rectangle(0,0,0,0);
-        offset = new Point(0,0);
+        offset = new PointInt();
+        scale = 1f;
     }
 
-    public Camera(Rectangle view, Point offset) {
+    public Camera(Rectangle view, PointInt offset, float scale) {
         camView = view;
         this.offset = offset;
+        this.scale = scale;
     }
 
     public void startCameraRendering(Graphics g) {
-        g.translate(-offset.getX(), -offset.getY());
+        g.scale(scale, scale);
+        g.translate(-offset.x, -offset.y);
         g.setClip(camView);
     }
 
     public void stopCameraRendering(Graphics g) {
-        g.translate(offset.getX(), offset.getY());
+        g.translate(offset.x, offset.y);
+        g.scale(1/scale, 1/scale);
         g.clearClip();
     }
 
-    public Point worldToScreen(float x, float y) {
-        return new Point(x - offset.getX(), y - offset.getY());
+    public PointFloat worldToScreen(float x, float y) {
+        return new PointFloat((x - offset.x) * scale, (y - offset.y) * scale);
     }
 
-    public Point worldToScreen(Point coords) {
-        coords.setX(coords.getX() - offset.getX());
-        coords.setY(coords.getY() - offset.getY());
+    public PointInt worldToScreen(PointInt coords) {
+        coords.x -= offset.x;
+        coords.y -= offset.y;
+        coords.x *= scale;
+        coords.y *= scale;
         return coords;
     }
 
-    public Point screenToWorld(float x, float y) {
-        return new Point(x + offset.getX(), y + offset.getY());
+    public PointFloat screenToWorld(float x, float y) {
+        return new PointFloat((x / scale) + offset.x, (y / scale) + offset.y);
     }
 
-    public Point screenToWorld(Point coords) {
-        coords.setX(coords.getX() + offset.getX());
-        coords.setY(coords.getY() + offset.getY());
+    public PointInt screenToWorld(PointInt coords) {
+        coords.x /= scale;
+        coords.y /= scale;
+        coords.y += offset.y;
+        coords.x += offset.x;
         return coords;
     }
 
@@ -69,11 +85,11 @@ public class Camera {
     }
 
     public float getOffsetX() {
-        return offset.getX();
+        return offset.x;
     }
 
     public float getOffsetY() {
-        return offset.getY();
+        return offset.y;
     }
 
     public void setWidth(float width) {
@@ -92,15 +108,29 @@ public class Camera {
         camView.setY(y);
     }
 
-    public void setOffset(Point offset) {
+    public void setOffset(PointInt offset) {
         this.offset = offset;
     }
 
     public void addOffsetX(float x) {
-        offset.setX(offset.getX() + x);
+        offset.x += x;
     }
 
     public void addOffsetY(float y) {
-        offset.setY(offset.getY() + y);
+        offset.y += y;
+    }
+
+    public void scale(int amount) {
+        float oldScale = scale;
+
+        this.scale *= Math.pow(scaleStep, amount);
+        this.scale = (float) Utils.clamp(scale, Camera.minScale, Camera.maxScale);
+
+        this.offset.x += (camView.getWidth() / 2f) * (1/oldScale - 1/scale);
+        this.offset.y += (camView.getHeight() / 2f) * (1/oldScale - 1/scale);
+    }
+
+    public void resetScale() {
+        this.scale = 1f;
     }
 }

@@ -1,7 +1,5 @@
 package com.enkey.logiccircuit.utils;
 
-import java.awt.Point;
-
 public enum Direction {
     UP(0),
     RIGHT(1),
@@ -18,7 +16,7 @@ public enum Direction {
         return this.value;
     }
 
-    public static Direction getDirection(Point target, Point fromDirection) {
+    public static Direction getDirection(PointInt target, PointInt fromDirection) {
         int deltaX = fromDirection.x - target.x;
         int deltaY = target.y - fromDirection.y;
 
