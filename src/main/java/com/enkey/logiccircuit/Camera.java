@@ -13,7 +13,7 @@ public class Camera {
 
     private final float scaleStep = 1.2f;
 
-    private static final float minScale = 0.4f;
+    private static final float minScale = 0.2f;
     private static final float maxScale = 2f;
 
     public Camera() {
